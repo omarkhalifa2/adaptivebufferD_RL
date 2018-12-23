@@ -9,9 +9,6 @@ lr=0.001
 batch_size = 10 
 decay=0.99
 
-def sigmoid(x):
-	return 1/(1+np.exp(-x))
-
 
 neurnet={}
 neurnet["w1"]=np.rand(300,50)/np.sqrt(50)
@@ -19,6 +16,10 @@ neurnet["w2"]=np.rand(300)/np.sqrt(300)
 
 wei_buff={i:np.zeros(j)  for i,j in neurnet.items() }
 rmsprop_cache = { k : np.zeros_like(v) for k,v in neurnet.items() } 
+
+def sigmoid(x):
+	return 1/(1+np.exp(-x))
+
 def forwardp(i):
 	h=np.dot(neurnet["w1"],i)
 	h[h<0]=0
@@ -42,8 +43,9 @@ def policy(vector):
 	sum=0
 	ovector=np.zeros_like(vector)
 	for i in range(0,vector.size,-1)
-		if vector[i]=!0:sum=vector[i]
-		break
+		if vector[i]!=0:
+			sum=vector[i]
+			break
 		else:
 			sum*=0.9
 		ovector[i]=sum
@@ -62,21 +64,16 @@ while True:
 
 	i=delay-delay_ancien
 	netinput=prepo(i)
-	
 	inpl.append(netinput)
 
 	netoutput,h=forwardp(netinput)
-	
 	hl.append(h)
 
 	action = 1 if np.random.uniform() < netoutput else -1 
-
-	y=1 if action ==1 else 0
-
+	y=1 if action == 1 else 0
 	grad.append(y-netoutput)
 
 	feedback,completed=buffermodule.change(action) #changes the size of the buffer 
-
 	feedbackl.append(feedback)
 
 	if completed == True:#end of an episode which reprensent a number of packets between each quality evaluation
@@ -104,16 +101,3 @@ while True:
 				rmsprop_cache[k]=decay*rmsprop_cache[k]+(1 - decay) * g**2
 				neurnet[k]+= lr * g/ (np.sqrt(rmsprop_cache[k])+ 1e-5)
 		
-
-
-
-
-
-
-
-
-
-
-
-
-
