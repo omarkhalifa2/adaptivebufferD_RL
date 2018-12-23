@@ -72,7 +72,7 @@ while True:
 	feedback,completed=buffermodule.change(action) #changes the size of the buffer 
 	feedbackl.append(feedback)
 
-	if completed == True:#end of an episode which reprensent a number of packets between each quality evaluation
+	if completed == True:#end of an episode which represents a number of packets between two quality evaluation
 
 		hiddens=np.vstack(hl)
 		inputs=np.vstack(inpl)
