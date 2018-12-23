@@ -9,7 +9,6 @@ lr=0.001
 batch_size = 10 
 decay=0.99
 
-
 neurnet={}
 neurnet["w1"]=np.rand(300,50)/np.sqrt(50)
 neurnet["w2"]=np.rand(300)/np.sqrt(300)
@@ -52,15 +51,12 @@ def policy(vector):
 
 	return ovector
 
-
-
 grad,inpl,hl,feedbackl=[],[],[],[]
 delay=buffermodule.getdelai() # gives us the the delay of this packet
 episode_num=0
 action=0
 
 while True:
-
 
 	i=delay-delay_ancien
 	netinput=prepo(i)
